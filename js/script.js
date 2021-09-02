@@ -2,6 +2,7 @@ const searchBox = document.getElementById("search-input")
 const countBook = document.getElementById("count-book")
 const resultFound = document.getElementById("error-handling")
 
+// spinner toggle function
 const toggleSpinner = displayStyle => {
     document.getElementById("spinner").style.display = displayStyle;
 }
@@ -11,8 +12,11 @@ document.getElementById("search-btn").addEventListener("click", () => {
     // display spinner
     toggleSpinner("block")
     resultFound.innerText = ""
+    // take search value
     search = searchBox.value;
+    // clear input
     searchBox.value = ""
+    // loading api data
     const url = `https://openlibrary.org/search.json?q=${search}`
     fetch(url)
         .then(res => res.json())
@@ -21,18 +25,25 @@ document.getElementById("search-btn").addEventListener("click", () => {
 
 
 const displayResult = books => {
+    // hide spinner
     toggleSpinner("none")
+    // get html div container
     const bookContainer = document.getElementById("book-container")
+    // clear div container
     bookContainer.textContent = ""
-    let count = 0;
+    // Result Not Found message
     if (!books.lenght) {
         resultFound.innerText = "Result Not Found"
+        // clear book found number
         countBook.innerText = ""
     }
+    let count = 0;
     books.forEach(book => {
+        // empty result not found
         resultFound.innerText = ""
+        // count founded books
         countBook.innerText = "Total Book Found: " + count++;
-        console.log(book);
+        // create div
         const div = document.createElement("div")
         div.classList.add("col")
         div.innerHTML = `
@@ -41,22 +52,12 @@ const displayResult = books => {
         <div class="card-body">
             <h5 class="card-title">${book.title}</h5>
             <h6>Author Name: ${book.author_name[0]}</h6>
-            <h6>First Published: ${book.first_publish_year}</h6>
+            <h6>First Published: ${book.first_publish_year ? book.first_publish_year : "Not Available"}</h6>
         </div>
     </div>
         `
+        // append div
         bookContainer.appendChild(div)
     });
 
 }
-
-// function authorKey(authorkey) {
-//     fetch(`https://openlibrary.org/authors/${authorkey}.json`)
-//         .then(res => res.json())
-//         .then(data => console.log(data.name))
-// }
-
-
-// function displayAuthor(authorName) {
-//     return authorName.name;
-// }
