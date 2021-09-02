@@ -48,13 +48,13 @@ const displayResult = books => {
         div.classList.add("col")
         div.innerHTML = `
         <div class="card h-100">
-        <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top" alt="..." height="450px">
-        <div class="card-body">
-            <h5 class="card-title">${book.title}</h5>
-            <h6>Author Name: ${book.author_name[0]}</h6>
-            <h6>First Published: ${book.first_publish_year ? book.first_publish_year : "Not Available"}</h6>
+            <img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="card-img-top" alt="..." height="450px">
+            <div class="card-body">
+                <h5 class="card-title">${book.title}</h5>
+                <h6>Author Name: ${book.author_name[0]}</h6>
+                <h6>First Published: ${book.first_publish_year ? book.first_publish_year : "Not Available"}</h6>
+            </div>
         </div>
-    </div>
         `
         // append div
         bookContainer.appendChild(div)
