@@ -1,6 +1,16 @@
 const searchBox = document.getElementById("search-input")
+const countBook = document.getElementById("count-book")
+const resultFound = document.getElementById("error-handling")
+
+const toggleSpinner = displayStyle => {
+    document.getElementById("spinner").style.display = displayStyle;
+}
+
 
 document.getElementById("search-btn").addEventListener("click", () => {
+    // display spinner
+    toggleSpinner("block")
+    resultFound.innerText = ""
     search = searchBox.value;
     searchBox.value = ""
     const url = `https://openlibrary.org/search.json?q=${search}`
@@ -11,11 +21,17 @@ document.getElementById("search-btn").addEventListener("click", () => {
 
 
 const displayResult = books => {
+    toggleSpinner("none")
     const bookContainer = document.getElementById("book-container")
     bookContainer.textContent = ""
     let count = 0;
+    if (!books.lenght) {
+        resultFound.innerText = "Result Not Found"
+        countBook.innerText = ""
+    }
     books.forEach(book => {
-        document.getElementById("count-book").innerText = "Total Book Found: " + count++;
+        resultFound.innerText = ""
+        countBook.innerText = "Total Book Found: " + count++;
         console.log(book);
         const div = document.createElement("div")
         div.classList.add("col")
@@ -31,6 +47,7 @@ const displayResult = books => {
         `
         bookContainer.appendChild(div)
     });
+
 }
 
 // function authorKey(authorkey) {
